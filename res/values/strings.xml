@@ -7,5 +7,6 @@
     <string name="title_activity_bdcontrol">BDControl</string>
     <string name="elija_rol">Elija rol</string>
     <string name="title_activity_alumno">Alumno</string>
+    <string name="title_activity_solicitar_apertura_expediente">SolicitarAperturaExpediente</string>
 
 </resources>

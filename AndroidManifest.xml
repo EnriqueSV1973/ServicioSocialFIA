@@ -30,6 +30,10 @@
             android:name="sv.ues.fia.serviciosocialfia.Alumno"
             android:label="@string/title_activity_alumno" >
         </activity>
+        <activity
+            android:name="sv.ues.fia.serviciosocialfia.SolicitarAperturaExpediente"
+            android:label="@string/title_activity_solicitar_apertura_expediente" >
+        </activity>
     </application>
 
 </manifest>
