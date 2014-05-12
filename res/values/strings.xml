@@ -6,5 +6,6 @@
     <string name="action_settings">Opciones</string>
     <string name="title_activity_bdcontrol">BDControl</string>
     <string name="elija_rol">Elija rol</string>
+    <string name="title_activity_alumno">Alumno</string>
 
 </resources>

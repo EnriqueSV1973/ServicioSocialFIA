@@ -26,6 +26,10 @@
             android:name="sv.ues.fia.serviciosocialfia.BDControl"
             android:label="@string/title_activity_bdcontrol" >
         </activity>
+        <activity
+            android:name="sv.ues.fia.serviciosocialfia.Alumno"
+            android:label="@string/title_activity_alumno" >
+        </activity>
     </application>
 
 </manifest>
