@@ -8,5 +8,9 @@
     <string name="elija_rol">Elija rol</string>
     <string name="title_activity_alumno">Alumno</string>
     <string name="title_activity_solicitar_apertura_expediente">SolicitarAperturaExpediente</string>
+    <string name="title_activity_alumno_consultar_proyectos">AlumnoConsultarProyectos</string>
+    <string name="title_activity_alumno_proponer_perfiles_de_proyectos">AlumnoProponerPerfilesDeProyectos</string>
+    <string name="title_activity_alumno_registrar_bitacora">AlumnoRegistrarBitacora</string>
+    <string name="title_activity_alumno_solicitar_asignacion_proyecto">AlumnoSolicitarAsignacionProyecto</string>
 
 </resources>

@@ -34,6 +34,22 @@
             android:name="sv.ues.fia.serviciosocialfia.SolicitarAperturaExpediente"
             android:label="@string/title_activity_solicitar_apertura_expediente" >
         </activity>
+        <activity
+            android:name="sv.ues.fia.serviciosocialfia.AlumnoConsultarProyectos"
+            android:label="@string/title_activity_alumno_consultar_proyectos" >
+        </activity>
+        <activity
+            android:name="sv.ues.fia.serviciosocialfia.AlumnoProponerPerfilesDeProyectos"
+            android:label="@string/title_activity_alumno_proponer_perfiles_de_proyectos" >
+        </activity>
+        <activity
+            android:name="sv.ues.fia.serviciosocialfia.AlumnoRegistrarBitacora"
+            android:label="@string/title_activity_alumno_registrar_bitacora" >
+        </activity>
+        <activity
+            android:name="sv.ues.fia.serviciosocialfia.AlumnoSolicitarAsignacionProyecto"
+            android:label="@string/title_activity_alumno_solicitar_asignacion_proyecto" >
+        </activity>
     </application>
 
 </manifest>
