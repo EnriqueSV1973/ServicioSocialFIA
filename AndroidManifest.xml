@@ -42,6 +42,14 @@
             android:name="sv.ues.fia.serviciosocialfia.TutorMenuActivity"
             android:label="@string/title_activity_tutor_menu" >
         </activity>
+        <activity
+            android:name="sv.ues.fia.serviciosocialfia.CrearExpedienteActivity"
+            android:label="@string/title_activity_crear_expediente" >
+        </activity>
+        <activity
+            android:name="sv.ues.fia.serviciosocialfia.ModificarExpedienteActivity"
+            android:label="@string/title_activity_modificar_expediente" >
+        </activity>
     </application>
 
 </manifest>

@@ -34,7 +34,7 @@ public class BDControl extends SQLiteOpenHelper {
 			+ "VALORSERVICIO        FLOAT,"
 			+ "HORASACUMULA         INTEGER,"
 			+ "FECHAACUMULA         CHAR(10),"
-			+ "constraint PK_ALUMNOEXPEDIENTE primary key (IDEXPEDIENTE));";
+			+ "constraint PK_ALUMNOEXPEDIENTE primary key (CARNETALUMNO));";
 
 	// TABLA: ASIGNACION
 	private static final String TABLA_ASIGNACION = "create table ASIGNACION "
@@ -397,7 +397,7 @@ public class BDControl extends SQLiteOpenHelper {
 			valores.put("SEXODIRECTOR", encargado.getSexoDirector());
 			valores.put("FECHAINICIO", encargado.getFechaInicio());
 			valores.put("FECHAFIN", encargado.getFechaFin());
-			contador = db.insert("DIRECTORSS", null, valores);
+			contador = db.insert("ENCARGADO_DE_SERVICIO_SOCIAL", null, valores);
 
 			// Cerrando base de datos
 			db.close();
@@ -564,7 +564,7 @@ public class BDControl extends SQLiteOpenHelper {
 			valores.put("HORAFIN", registro.getHoraFin());
 			valores.put("FECHAACTIVIDAD", registro.getFechaActividad());
 			valores.put("CANTIDADHORAS", registro.getCantidadHoras());
-			contador = db.insert("ESCUELA", null, valores);
+			contador = db.insert("REGISTRO", null, valores);
 
 			// Cerrando base de datos
 			db.close();
@@ -648,7 +648,11 @@ public class BDControl extends SQLiteOpenHelper {
 
 		if (db != null) {
 			ContentValues valores = new ContentValues();
-
+			valores.put("CODIGOTUTOR", tutor.getCodigoTutor());
+			valores.put("IDBENEFICIARIO", tutor.getIdBeneficiario());
+			valores.put("NOMBRETUTOR", tutor.getNombreTutor());
+			valores.put("APELLIDOTUTOR", tutor.getApellidoTutor());
+			valores.put("SEXOTUTOR", tutor.getSexoTutor());
 			contador = db.insert("TUTOR", null, valores);
 			// Cerrando base de datos
 			db.close();
@@ -678,6 +682,7 @@ public class BDControl extends SQLiteOpenHelper {
 
 		if (db != null) {
 			ContentValues valores = new ContentValues();
+			String[] id = { alumExp.getCarnetAlumno() };
 			valores.put("IDEXPEDIENTE", alumExp.getIdExpediente());
 			valores.put("IDBITACORA", alumExp.getIdBitacora());
 			valores.put("CARNETEMPLEADO", alumExp.getCarnetEmpleado());
@@ -696,7 +701,7 @@ public class BDControl extends SQLiteOpenHelper {
 			valores.put("HORASACUMULA", alumExp.getHorasAcumula());
 			valores.put("FECHAACUMULA", alumExp.getFechaAcumula());
 			contador = db.update("ALUMNOEXPEDIENTE", valores,
-					"CARNETEMPLEADO =" + alumExp.getCarnetAlumno(), null);
+					"CARNETALUMNO = ?", id);
 
 			// Cerrando base de datos
 			db.close();
@@ -722,6 +727,7 @@ public class BDControl extends SQLiteOpenHelper {
 
 		if (db != null) {
 			ContentValues valores = new ContentValues();
+			String[] id = { beneficiario.getIdBeneficiario() };
 			valores.put("IDBENEFICIARIO", beneficiario.getIdBeneficiario());
 			valores.put("CARNETEMPLEADO", beneficiario.getCarnetEmpleado());
 			valores.put("NOMBREORGANIZACION",
@@ -733,8 +739,8 @@ public class BDControl extends SQLiteOpenHelper {
 			valores.put("TELEFONOBENEF", beneficiario.getTelefonoBenef());
 			valores.put("DIRECCIONBENEF", beneficiario.getDireccionBenef());
 			valores.put("EMAIL", beneficiario.getEmail());
-			contador = db.update("BENEFICIARIO", valores, "IDBENEFICIARIO ="
-					+ beneficiario.getIdBeneficiario(), null);
+			contador = db.update("BENEFICIARIO", valores, "IDBENEFICIARIO = ?",
+					id);
 
 			// Cerrando base de datos
 			db.close();
@@ -760,14 +766,14 @@ public class BDControl extends SQLiteOpenHelper {
 
 		if (db != null) {
 			ContentValues valores = new ContentValues();
+			String[] id = { bitacora.getIdBitacora() };
 			valores.put("IDBITACORA", bitacora.getIdBitacora());
 			valores.put("CODIGOTUTOR", bitacora.getCodigoTutor());
 			valores.put("ESTADOACTIVIDAD", bitacora.getEstadoActividad());
 			valores.put("FECHAAUTORIZADO", bitacora.getFechaAutorizado());
 			valores.put("VALORACTIVIDAD", bitacora.getValorActividad());
 			valores.put("PRECIOTRABAJO", bitacora.getPrecioTrabajo());
-			contador = db.update("BITACORA", valores,
-					"IDBITACORA =" + bitacora.getIdBitacora(), null);
+			contador = db.update("BITACORA", valores, "IDBITACORA = ?", id);
 
 			// Cerrando base de datos
 			db.close();
@@ -793,11 +799,11 @@ public class BDControl extends SQLiteOpenHelper {
 
 		if (db != null) {
 			ContentValues valores = new ContentValues();
+			String[] id = { carreras.getCodCarrera() };
 			valores.put("CODCARRERA", carreras.getCodCarrera());
 			valores.put("CODESCUELA", carreras.getCodEscuela());
 			valores.put("NOMBRECARRERA", carreras.getNombreCarrera());
-			contador = db.update("CARRERAS", valores,
-					"CODCARRERA =" + carreras.getCodCarrera(), null);
+			contador = db.update("CARRERAS", valores, "CODCARRERA = ?", id);
 
 			// Cerrando base de datos
 			db.close();
@@ -823,6 +829,7 @@ public class BDControl extends SQLiteOpenHelper {
 
 		if (db != null) {
 			ContentValues valores = new ContentValues();
+			String[] id = { encargado.getCarnetEmpleado() };
 			valores.put("CARNETEMPLEADO", encargado.getCarnetEmpleado());
 			valores.put("CODESCUELA", encargado.getCodEscuela());
 			valores.put("NOMBREDIRECTOR", encargado.getNombreDirector());
@@ -830,8 +837,8 @@ public class BDControl extends SQLiteOpenHelper {
 			valores.put("SEXODIRECTOR", encargado.getSexoDirector());
 			valores.put("FECHAINICIO", encargado.getFechaInicio());
 			valores.put("FECHAFIN", encargado.getFechaFin());
-			contador = db.update("DIRECTORSS", valores, "CARNETEMPLEADO ="
-					+ encargado.getCarnetEmpleado(), null);
+			contador = db.update("ENCARGADO_DE_SERVICIO_SOCIAL", valores,
+					"CARNETEMPLEADO = ?", id);
 
 			// Cerrando base de datos
 			db.close();
@@ -857,10 +864,10 @@ public class BDControl extends SQLiteOpenHelper {
 
 		if (db != null) {
 			ContentValues valores = new ContentValues();
+			String[] id = { escuela.getCodEscuela() };
 			valores.put("CODESCUELA", escuela.getCodEscuela());
 			valores.put("NOMBREESCUELA", escuela.getNombreEscuela());
-			contador = db.update("ESCUELA", valores,
-					"CODESCUELA =" + escuela.getCodEscuela(), null);
+			contador = db.update("ESCUELA", valores, "CODESCUELA = ?", id);
 
 			// Cerrando base de datos
 			db.close();
@@ -886,6 +893,7 @@ public class BDControl extends SQLiteOpenHelper {
 
 		if (db != null) {
 			ContentValues valores = new ContentValues();
+			String[] id = { "" + informe.getCorrInforme() };
 			valores.put("CODIGOTUTOR", informe.getCodigoTutor());
 			valores.put("IDEXPEDIENTE", informe.getIdExpediente());
 			valores.put("CORRINFORME", informe.getCorrInforme());
@@ -895,8 +903,7 @@ public class BDControl extends SQLiteOpenHelper {
 			valores.put("COMENTARIOS", informe.getComentarios());
 			valores.put("TIPOINFORME", informe.getTipoInforme());
 			valores.put("ESTADO", informe.getEstado());
-			contador = db.update("INFORME", valores,
-					"CORRINFORME =" + informe.getCorrInforme(), null);
+			contador = db.update("INFORME", valores, "CORRINFORME = ?", id);
 
 			// Cerrando base de datos
 			db.close();
@@ -922,14 +929,14 @@ public class BDControl extends SQLiteOpenHelper {
 
 		if (db != null) {
 			ContentValues valores = new ContentValues();
+			String[] id = { "" + precios.getCorr() };
 			valores.put("CORR", precios.getCorr());
 			valores.put("IDTIPODETRABAJO", precios.getIdTipoDeTrabajo());
 			valores.put("PRECIO", precios.getPrecio());
 			valores.put("FECHAINICIALAPLIPRE", precios.getFechaInicialApliPre());
 			valores.put("FECHAFINALAPLIPRE", precios.getFechaFinalApliPre());
 			valores.put("OBSERVACION", precios.getObservacion());
-			contador = db.update("PRECIOS", valores,
-					"CORR =" + precios.getCorr(), null);
+			contador = db.update("PRECIOS", valores, "CORR = ?", id);
 
 			// Cerrando base de datos
 			db.close();
@@ -955,6 +962,7 @@ public class BDControl extends SQLiteOpenHelper {
 
 		if (db != null) {
 			ContentValues valores = new ContentValues();
+			String[] id = { proyecto.getIdProyecto() };
 			valores.put("IDPROYECTO", proyecto.getIdProyecto());
 			valores.put("IDBENEFICIARIO", proyecto.getIdBeneficiario());
 			valores.put("IDTIPOPROYECTO", proyecto.getIdTipoProyecto());
@@ -969,8 +977,7 @@ public class BDControl extends SQLiteOpenHelper {
 			valores.put("ESTADOPROYECTO", proyecto.getEstadoProyecto());
 			valores.put("ESTADOASIGNACION", proyecto.getEstadoAsignacion());
 			valores.put("VALORPROYECTO", proyecto.getValorProyecto());
-			contador = db.update("PROYECTO", valores,
-					"IDPROYECTO =" + proyecto.getIdProyecto(), null);
+			contador = db.update("PROYECTO", valores, "IDPROYECTO = ?", id);
 
 			// Cerrando base de datos
 			db.close();
@@ -996,11 +1003,12 @@ public class BDControl extends SQLiteOpenHelper {
 
 		if (db != null) {
 			ContentValues valores = new ContentValues();
+			String[] id = { tipoDeProyecto.getIdTipoProyecto() };
 			valores.put("IDTIPOPROYECTO", tipoDeProyecto.getIdTipoProyecto());
 			valores.put("MODALIDADPROYECTO",
 					tipoDeProyecto.getModalidadProyecto());
-			contador = db.update("TIPODEPROYECTO", valores,
-					"IDTIPODEPROYECTO =" +  tipoDeProyecto.getIdTipoProyecto(), null);
+			contador = db.update("TIPO_DE_PROYECTO", valores,
+					"IDTIPODEPROYECTO = ?", id);
 
 			// Cerrando base de datos
 			db.close();
@@ -1026,10 +1034,11 @@ public class BDControl extends SQLiteOpenHelper {
 
 		if (db != null) {
 			ContentValues valores = new ContentValues();
+			String[] id = { tipoDeTrabajo.getIdTipoDeTrabajo() };
 			valores.put("IDTIPODETRABAJO", tipoDeTrabajo.getIdTipoDeTrabajo());
 			valores.put("NOMBRETIPO", tipoDeTrabajo.getNombreTipo());
-			contador = db.update("TIPODETRABAJO", valores,
-					"IDTIPODETRABAJO =" + tipoDeTrabajo.getIdTipoDeTrabajo(), null);
+			contador = db.update("TIPO_DE_TRABAJO", valores,
+					"IDTIPODETRABAJO = ?", id);
 
 			// Cerrando base de datos
 			db.close();
@@ -1055,13 +1064,13 @@ public class BDControl extends SQLiteOpenHelper {
 
 		if (db != null) {
 			ContentValues valores = new ContentValues();
+			String[] id = { tutor.getCodigoTutor() };
 			valores.put("CODIGOTUTOR", tutor.getCodigoTutor());
 			valores.put("IDBENEFICIARIO", tutor.getIdBeneficiario());
 			valores.put("NOMBRETUTOR", tutor.getNombreTutor());
 			valores.put("APELLIDOTUTOR", tutor.getApellidoTutor());
 			valores.put("SEXOTUTOR", tutor.getSexoTutor());
-			contador = db.update("TUTOR", valores,
-					"CODIGOTUTOR =" + tutor.getCodigoTutor(), null);
+			contador = db.update("TUTOR", valores, "CODIGOTUTOR = ?", id);
 
 			// Cerrando base de datos
 			db.close();
@@ -1081,8 +1090,320 @@ public class BDControl extends SQLiteOpenHelper {
 
 	// Funciones de eliminación de datos
 
+	public String eliminar(AlumnoExpediente alumExp) {
+		// Abriendo la base de datos
+		SQLiteDatabase db = getWritableDatabase();
+
+		// Variables para controlar los registros insertados
+		long contador = 0;
+		String registrosModificados = "Registro eliminado # = ";
+
+		if (db != null) {
+			String where = "CARNETALUMNO = '" + alumExp.getCarnetAlumno() + "'";
+			contador = db.delete("ALUMNOEXPEDIENTE", where, null);
+
+			// Cerrando base de datos
+			db.close();
+
+			if (contador == -1 || contador == 0) {
+				registrosModificados = "Error al eliminar el registro, Registro"
+						+ "no encontrado. Verificar eliminación";
+			} else {
+				registrosModificados = registrosModificados + contador;
+			}
+			return registrosModificados;
+		}
+		return "La Base de Datos no existe";
+	}
+
+	public String eliminar(Beneficiario beneficiario) {
+		// Abriendo la base de datos
+		SQLiteDatabase db = getWritableDatabase();
+
+		// Variables para controlar los registros insertados
+		long contador = 0;
+		String registrosModificados = "Registro eliminado # = ";
+
+		if (db != null) {
+			String where = "IDBENEFICIARIO = '"
+					+ beneficiario.getIdBeneficiario() + "'";
+			contador = db.delete("BENEFICIARIO", where, null);
+
+			// Cerrando base de datos
+			db.close();
+
+			if (contador == -1 || contador == 0) {
+				registrosModificados = "Error al eliminar el registro, Registro"
+						+ "no encontrado. Verificar eliminación";
+			} else {
+				registrosModificados = registrosModificados + contador;
+			}
+			return registrosModificados;
+		}
+		return "La Base de Datos no existe";
+	}
+
+	public String eliminar(Bitacora bitacora) {
+		// Abriendo la base de datos
+		SQLiteDatabase db = getWritableDatabase();
+
+		// Variables para controlar los registros insertados
+		long contador = 0;
+		String registrosModificados = "Registro eliminado # = ";
+
+		if (db != null) {
+			String where = "IDBITACORA = '" + bitacora.getIdBitacora() + "'";
+			contador = db.delete("BITACORA", where, null);
+
+			// Cerrando base de datos
+			db.close();
+
+			if (contador == -1 || contador == 0) {
+				registrosModificados = "Error al eliminar el registro, Registro"
+						+ "no encontrado. Verificar eliminación";
+			} else {
+				registrosModificados = registrosModificados + contador;
+			}
+			return registrosModificados;
+		}
+		return "La Base de Datos no existe";
+	}
+
+	public String eliminar(Carreras carreras) {
+		// Abriendo la base de datos
+		SQLiteDatabase db = getWritableDatabase();
+
+		// Variables para controlar los registros insertados
+		long contador = 0;
+		String registrosModificados = "Registro eliminado # = ";
+
+		if (db != null) {
+			String where = "CODCARRERA = '" + carreras.getCodCarrera() + "'";
+			contador = db.delete("CARRERAS", where, null);
+
+			// Cerrando base de datos
+			db.close();
+
+			if (contador == -1 || contador == 0) {
+				registrosModificados = "Error al eliminar el registro, Registro"
+						+ "no encontrado. Verificar eliminación";
+				registrosModificados = registrosModificados + contador;
+			}
+			return registrosModificados;
+		}
+		return "La Base de Datos no existe";
+	}
+
+	public String eliminar(EncargadoDeServicioSocial encargado) {
+		// Abriendo la base de datos
+		SQLiteDatabase db = getWritableDatabase();
+
+		// Variables para controlar los registros insertados
+		long contador = 0;
+		String registrosModificados = "Registro eliminado # = ";
+
+		if (db != null) {
+			String where = "CARNETEMPLEADO = '" + encargado.getCarnetEmpleado()
+					+ "'";
+			contador = db.delete("ENCARGADO_DE_SERVICIO_SOCIAL", where, null);
+
+			// Cerrando base de datos
+			db.close();
+
+			if (contador == -1 || contador == 0) {
+				registrosModificados = "Error al eliminar el registro, Registro"
+						+ "no encontrado. Verificar eliminación";
+			} else {
+				registrosModificados = registrosModificados + contador;
+			}
+			return registrosModificados;
+		}
+		return "La Base de Datos no existe";
+	}
+
+	public String eliminar(Escuela escuela) {
+		// Abriendo la base de datos
+		SQLiteDatabase db = getWritableDatabase();
+
+		// Variables para controlar los registros insertados
+		long contador = 0;
+		String registrosModificados = "Registro eliminado # = ";
+
+		if (db != null) {
+			String where = "CODESCUELA = '" + escuela.getCodEscuela() + "'";
+			contador = db.delete("ESCUELA", where, null);
+
+			// Cerrando base de datos
+			db.close();
+
+			if (contador == -1 || contador == 0) {
+				registrosModificados = "Error al eliminar el registro, Registro"
+						+ "no encontrado. Verificar eliminación";
+				registrosModificados = registrosModificados + contador;
+			}
+			return registrosModificados;
+		}
+		return "La Base de Datos no existe";
+	}
+
+	public String eliminar(Informe informe) {
+		// Abriendo la base de datos
+		SQLiteDatabase db = getWritableDatabase();
+
+		// Variables para controlar los registros insertados
+		long contador = 0;
+		String registrosModificados = "Registro eliminado # = ";
+
+		if (db != null) {
+			String where = "CORRINFORME = '" + informe.getCorrInforme() + "'";
+			contador = db.delete("INFORME", where, null);
+
+			// Cerrando base de datos
+			db.close();
+
+			if (contador == -1 || contador == 0) {
+				registrosModificados = "Error al eliminar el registro, Registro"
+						+ "no encontrado. Verificar eliminación";
+			} else {
+				registrosModificados = registrosModificados + contador;
+			}
+			return registrosModificados;
+		}
+		return "La Base de Datos no existe";
+	}
+
+	public String eliminar(Precios precios) {
+		// Abriendo la base de datos
+		SQLiteDatabase db = getWritableDatabase();
+
+		// Variables para controlar los registros insertados
+		long contador = 0;
+		String registrosModificados = "Registro eliminado # = ";
+
+		if (db != null) {
+			String where = "CORR = '" + precios.getCorr() + "'";
+			contador = db.delete("PRECIOS", where, null);
+
+			// Cerrando base de datos
+			db.close();
+
+			if (contador == -1 || contador == 0) {
+				registrosModificados = "Error al eliminar el registro, Registro"
+						+ "no encontrado. Verificar eliminación";
+			} else {
+				registrosModificados = registrosModificados + contador;
+			}
+			return registrosModificados;
+		}
+		return "La Base de Datos no existe";
+	}
+
+	public String eliminar(Proyecto proyecto) {
+		// Abriendo la base de datos
+		SQLiteDatabase db = getWritableDatabase();
+
+		// Variables para controlar los registros insertados
+		long contador = 0;
+		String registrosModificados = "Registro eliminado # = ";
+
+		if (db != null) {
+			String where = "IDPROYECTO = '" + proyecto.getIdProyecto() + "'";
+			contador = db.delete("PROYECTO", where, null);
+
+			// Cerrando base de datos
+			db.close();
+
+			if (contador == -1 || contador == 0) {
+				registrosModificados = "Error al eliminar el registro, Registro"
+						+ "no encontrado. Verificar eliminación";
+			} else {
+				registrosModificados = registrosModificados + contador;
+			}
+			return registrosModificados;
+		}
+		return "La Base de Datos no existe";
+	}
+
+	public String eliminar(TipoDeProyecto tipoDeProyecto) {
+		// Abriendo la base de datos
+		SQLiteDatabase db = getWritableDatabase();
+
+		// Variables para controlar los registros insertados
+		long contador = 0;
+		String registrosModificados = "Registro eliminado # = ";
+
+		if (db != null) {
+			String where = "IDTIPODEPROYECTO = '" + tipoDeProyecto.getIdTipoProyecto() + "'";
+			contador = db.delete("TIPO_DE_PROYECTO", where, null);
+
+			// Cerrando base de datos
+			db.close();
+
+			if (contador == -1 || contador == 0) {
+				registrosModificados = "Error al eliminar el registro, Registro"
+						+ "no encontrado. Verificar eliminación";
+			} else {
+				registrosModificados = registrosModificados + contador;
+			}
+			return registrosModificados;
+		}
+		return "La Base de Datos no existe";
+	}
+
+	public String eliminar(TipoDeTrabajo tipoDeTrabajo) {
+		// Abriendo la base de datos
+		SQLiteDatabase db = getWritableDatabase();
+
+		// Variables para controlar los registros insertados
+		long contador = 0;
+		String registrosModificados = "Registro eliminado # = ";
+
+		if (db != null) {
+			String where = "IDTIPODETRABAJO = '" + tipoDeTrabajo.getIdTipoDeTrabajo() + "'";
+			contador = db.delete("TIPO_DE_TRABAJO", where,null);
+
+			// Cerrando base de datos
+			db.close();
+
+			if (contador == -1 || contador == 0) {
+				registrosModificados = "Error al eliminar el registro, Registro"
+						+ "no encontrado. Verificar eliminación";
+			} else {
+				registrosModificados = registrosModificados + contador;
+			}
+			return registrosModificados;
+		}
+		return "La Base de Datos no existe";
+	}
+
+	public String eliminar(Tutor tutor) {
+		// Abriendo la base de datos
+		SQLiteDatabase db = getWritableDatabase();
+
+		// Variables para controlar los registros insertados
+		long contador = 0;
+		String registrosModificados = "Registro eliminado # = ";
+
+		if (db != null) {
+			String where = "CODIGOTUTOR = '" + tutor.getCodigoTutor() + "'";
+			contador = db.delete("TUTOR", where, null);
+
+			// Cerrando base de datos
+			db.close();
+
+			if (contador == -1 || contador == 0) {
+				registrosModificados = "Error al eliminar el registro, Registro"
+						+ "no encontrado. Verificar eliminación";
+			} else {
+				registrosModificados = registrosModificados + contador;
+			}
+			return registrosModificados;
+		}
+		return "La Base de Datos no existe";
+	}
 	// FIN de funciones de eliminación de datos
 
+	
 	// Funciones de consulta de datos
 
 	// FIN de funciones de consulta de datos
